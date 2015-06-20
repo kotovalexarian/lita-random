@@ -1,4 +1,4 @@
-require "lita/random/version"
+require 'lita/random/version'
 
 module Lita
   module Random
