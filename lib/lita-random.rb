@@ -1,12 +1,13 @@
-require "lita"
+# rubocop:disable Style/FileName
+
+require 'lita'
 
 Lita.load_locales Dir[File.expand_path(
-  File.join("..", "..", "locales", "*.yml"), __FILE__
+  File.join('..', '..', 'locales', '*.yml'), __FILE__
 )]
 
-require "lita/handlers/random"
+require 'lita/handlers/random'
 
 Lita::Handlers::Random.template_root File.expand_path(
-  File.join("..", "..", "templates"),
- __FILE__
+  File.join('..', '..', 'templates'), __FILE__
 )
