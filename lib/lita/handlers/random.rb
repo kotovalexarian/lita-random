@@ -35,14 +35,14 @@ module Lita
         response.reply(::Random.rand(from...to).to_s)
       end
 
-      route(/^rand(om)?\s+(\d+\.\d+)\s+(\d+)?$/i,
+      route(/^rand(om)?\s+(?<from>\d+\.\d+)\s+(?<to>\d+)?$/i,
             :route_random_float_from_to, command: true)
-      route(/^rand(om)?\s+(\d+(\.\d+)?)\s+(\d+\.\d+)?$/i,
+      route(/^rand(om)?\s+(?<from>\d+(\.\d+)?)\s+(?<to>\d+\.\d+)?$/i,
             :route_random_float_from_to, command: true)
       def route_random_float_from_to(response)
-        matches = response.matches[0][0..1] + [response.matches[0][-1]]
-        from = matches[1].to_f
-        to = matches[2].to_f
+        matches = response.matches[0]
+        from = matches[0].to_f
+        to = matches[1].to_f
         response.reply(::Random.rand(from...to).to_s)
       end
     end
