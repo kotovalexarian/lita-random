@@ -1,5 +1,15 @@
 # Change Log
 
+## [v0.2.0](https://github.com/braiden-vasco/lita-random/tree/v0.2.0) (2015-06-21)
+
+[Full Changelog](https://github.com/braiden-vasco/lita-random/compare/v0.1.0...v0.2.0)
+
+**Merged pull requests:**
+
+- Allow float ranges [\#17](https://github.com/braiden-vasco/lita-random/pull/17) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Basic testing [\#15](https://github.com/braiden-vasco/lita-random/pull/15) ([braiden-vasco](https://github.com/braiden-vasco))
+
 ## [v0.1.0](https://github.com/braiden-vasco/lita-random/tree/v0.1.0) (2015-06-20)
 
 **Merged pull requests:**
