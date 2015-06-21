@@ -38,19 +38,13 @@ Command `random` has alias `rand`
 
 Command `base64` has alias `b64`
 
-* `random base64` -
-  random base64 string; length of source string is 16; length of result is 24
+* `random base64 <n=16>` -
+  random base64 string, length of source string is `n`,
+  length of result is about `n * 4 / 3` (24 with default value of `n`)
 
-* `random base64 <n>` -
-  random base64 string; length of source string is `n`;
-  length of result is about 4/3 `n`
+Command `hex` has aliases `hx` and `x`
 
-Command `hex` has alias `x`
-
-* `random hex` -
-  random hexadecimal string with length 32
-
-* `random hex <n>` -
+* `random hex <n=16>` -
   random hexadecimal string with length `n * 2`
 
 ### Examples
