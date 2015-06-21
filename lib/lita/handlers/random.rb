@@ -45,6 +45,18 @@ module Lita
         to = matches[1].to_f
         response.reply(::Random.rand(from...to).to_s)
       end
+
+      route(/^rand(om)?\s+base64$/i, :route_random_base64, command: true)
+      def route_random_base64(response)
+        response.reply(SecureRandom.base64)
+      end
+
+      route(/^rand(om)?\s+base64\s+(\d+)$/i,
+            :route_random_base64_n, command: true)
+      def route_random_base64_n(response)
+        n = response.matches[0][1].to_i
+        response.reply(SecureRandom.base64(n))
+      end
     end
 
     Lita.register_handler(Random)

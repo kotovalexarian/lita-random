@@ -22,16 +22,23 @@ gem 'lita-random', '~> 0.2.0'
 
 ### Commands
 
-- `random` -
+Command `random` has alias `rand`
+
+* `random` -
   random float number, greater or equal to 0 and lesser than 1
 
-- `random <to>` -
+* `random <to>` -
   random integer or float number, greater or equal to 0 and lesser than `to`
 
-- `random <from> <to>` -
+* `random <from> <to>` -
   random integer or float number, greater or equal to `from` and lesser than `to`
 
-Command `random` has alias `rand`
+* `random base64` -
+  random base64 string; length of source string is 16; length of result is 24
+
+* `random base64 <n>` -
+  random base64 string; length of source string is `n`;
+  length of result is about 4/3 `n`
 
 ### Examples
 
@@ -52,4 +59,8 @@ You: lita rand 1000 2000
 Lita: 1240
 You: lita random 12 13.5
 Lita: 13.458799783677263
+You: lita random base64
+Lite: 56wnZVVVStKG5+I6L4LVGw==
+You: lita random base64 10
+You: NMkIhB+iG2VNpg==
 ```
