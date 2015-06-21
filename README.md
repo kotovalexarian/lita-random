@@ -44,8 +44,12 @@ You: lita random 5
 Lita: 2
 You: lita rand 100
 Lita: 24
+You: lita random 1.5
+Lita: 1.1828046952104034
 You: lita random 5 10
 Lita: 8
 You: lita rand 1000 2000
 Lita: 1240
+You: lita random 12 13.5
+Lita: 13.458799783677263
 ```
