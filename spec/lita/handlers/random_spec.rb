@@ -113,37 +113,27 @@ describe Lita::Handlers::Random, lita_handler: true do
 
   describe '/random <from:float> <to:float>' do
     it 'replies in correct format' do
-      send_command('random 1.0 2')
-      value = replies.last.to_f
-      expect(value).to be >= 1
-      expect(value).to be < 2
-    end
-
-    it 'replies in correct format' do
-      send_command('random 5 6.2')
-      value = replies.last.to_f
-      expect(value).to be >= 5
-      expect(value).to be < 6.2
-    end
-
-    it 'replies in correct format' do
-      from = 0.0
-      to   = 20
-      send_command("random #{from} #{to}")
+      send_command('random 12 13.5')
       expect(replies.last).to match(/\A\d+\.\d+\z/)
       value = replies.last.to_f
-      expect(value).to be >= from
-      expect(value).to be < to
+      expect(value).to be >= 12
+      expect(value).to be < 13.5
     end
 
     it 'replies in correct format' do
-      from = 10_000
-      to   = 10_010.0
-      send_command("random #{from} #{to}")
+      send_command('random 16.3 17')
       expect(replies.last).to match(/\A\d+\.\d+\z/)
       value = replies.last.to_f
-      expect(value).to be >= from
-      expect(value).to be < to
+      expect(value).to be >= 16.3
+      expect(value).to be < 17
+    end
+
+    it 'replies in correct format' do
+      send_command('random 1.8 3.4')
+      expect(replies.last).to match(/\A\d+\.\d+\z/)
+      value = replies.last.to_f
+      expect(value).to be >= 1.8
+      expect(value).to be < 3.4
     end
   end
 end
