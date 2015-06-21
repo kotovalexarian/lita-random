@@ -57,6 +57,17 @@ module Lita
         n = response.matches[0][1].to_i
         response.reply(SecureRandom.base64(n))
       end
+
+      route(/^rand(om)?\s+he?x$/i, :route_random_hex, command: true)
+      def route_random_hex(response)
+        response.reply(SecureRandom.hex)
+      end
+
+      route(/^rand(om)?\s+he?x\s+(\d+)$/i, :route_random_hex_n, command: true)
+      def route_random_hex_n(response)
+        n = response.matches[0][1].to_i
+        response.reply(SecureRandom.hex(n))
+      end
     end
 
     Lita.register_handler(Random)

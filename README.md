@@ -40,6 +40,14 @@ Command `random` has alias `rand`
   random base64 string; length of source string is `n`;
   length of result is about 4/3 `n`
 
+Command `hex` has alias `hx`
+
+* `random hex` -
+  random hexadecimal string with length 32
+
+* `random hex <n>` -
+  random hexadecimal string with length `n * 2`
+
 ### Examples
 
 ```
@@ -63,4 +71,8 @@ You: lita random base64
 Lite: 56wnZVVVStKG5+I6L4LVGw==
 You: lita random base64 10
 Lita: NMkIhB+iG2VNpg==
+You: lita random hex
+Lita: 7d6f39cf53303db862bac5e1b36eb0fa
+You: lita random hex 10
+Lita: 0d8297837d6e63b8c25b
 ```
