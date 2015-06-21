@@ -142,6 +142,11 @@ describe Lita::Handlers::Random, lita_handler: true do
   it { is_expected.to route_command('rAnDoM bAsE64').to :route_random_base64 }
   it { is_expected.to route_command('RaNd   BaSe64').to :route_random_base64 }
 
+  it { is_expected.to route_command('randombase64').to :route_random_base64 }
+  it { is_expected.to route_command('randbase64').to :route_random_base64 }
+  it { is_expected.to route_command('rAnDoMb64').to :route_random_base64 }
+  it { is_expected.to route_command('RaNdB64').to :route_random_base64 }
+
   it do
     is_expected.to route_command('random  base64 0').to :route_random_base64_n
   end
@@ -158,9 +163,39 @@ describe Lita::Handlers::Random, lita_handler: true do
     is_expected.to route_command('RaNd BaSe64   4925').to :route_random_base64_n
   end
 
+  it do
+    is_expected.to route_command('randombase64 0').to :route_random_base64_n
+  end
+
+  it { is_expected.to route_command('randbase64 23').to :route_random_base64_n }
+  it { is_expected.to route_command('rAnDoMb64 5').to :route_random_base64_n }
+  it { is_expected.to route_command('RaNdB64  4925').to :route_random_base64_n }
+
   describe '/random base64' do
     it 'replies in correct format' do
       send_command('random base64')
+      expect(replies.last).to match %r{\A[A-Za-z0-9+/]{22}==\z}
+    end
+
+    it 'replies in correct format' do
+      send_command('rand b64')
+      expect(replies.last).to match %r{\A[A-Za-z0-9+/]{22}==\z}
+    end
+
+    it 'replies in correct format' do
+      send_command('randbase64')
+      expect(replies.last).to match %r{\A[A-Za-z0-9+/]{22}==\z}
+    end
+
+    it 'replies in correct format' do
+      send_command('randomb64')
+      expect(replies.last).to match %r{\A[A-Za-z0-9+/]{22}==\z}
+    end
+
+    # The most important test, because this variant of command is the shortest
+    # and it will be used most frequently
+    it 'replies in correct format' do
+      send_command('randb64')
       expect(replies.last).to match %r{\A[A-Za-z0-9+/]{22}==\z}
     end
   end
@@ -172,27 +207,29 @@ describe Lita::Handlers::Random, lita_handler: true do
     end
 
     it 'replies in correct format' do
-      send_command('random base64 1')
+      send_command('randombase64 1')
       expect(replies.last).to match %r{\A[A-Za-z0-9+/]{2}==\z}
     end
 
     it 'replies in correct format' do
-      send_command('random base64 2')
+      send_command('random b64 2')
       expect(replies.last).to match %r{\A[A-Za-z0-9+/]{3}=\z}
     end
 
     it 'replies in correct format' do
-      send_command('random base64 3')
+      send_command('randbase64 3')
       expect(replies.last).to match %r{\A[A-Za-z0-9+/]{4}\z}
     end
 
     it 'replies in correct format' do
-      send_command('random base64 34')
+      send_command('randomb64 34')
       expect(replies.last).to match %r{\A[A-Za-z0-9+/]{46}==\z}
     end
 
+    # The most important test, because this variant of command is the shortest
+    # and it will be used most frequently
     it 'replies in correct format' do
-      send_command('random base64 35')
+      send_command('randb64 35')
       expect(replies.last).to match %r{\A[A-Za-z0-9+/]{47}=\z}
     end
   end
@@ -202,14 +239,41 @@ describe Lita::Handlers::Random, lita_handler: true do
   it { is_expected.to route_command('rAnDoM HeX').to :route_random_hex }
   it { is_expected.to route_command('RaNd   hx').to :route_random_hex }
 
+  it { is_expected.to route_command('randomHx').to :route_random_hex }
+  it { is_expected.to route_command('randhex').to :route_random_hex }
+  it { is_expected.to route_command('rAnDoMx').to :route_random_hex }
+  it { is_expected.to route_command('RaNdX').to :route_random_hex }
+
   it { is_expected.to route_command('random  hx  0').to :route_random_hex_n }
   it { is_expected.to route_command('rand  hEx 284').to :route_random_hex_n }
   it { is_expected.to route_command('rAnDoM HeX 1').to :route_random_hex_n }
   it { is_expected.to route_command('RaNd   Hx  4928').to :route_random_hex_n }
 
+  it { is_expected.to route_command('randomhx  0').to :route_random_hex_n }
+  it { is_expected.to route_command('randhEx 284').to :route_random_hex_n }
+  it { is_expected.to route_command('rAnDoMx 1').to :route_random_hex_n }
+  it { is_expected.to route_command('RaNdX  4928').to :route_random_hex_n }
+
   describe '/random hex' do
     it 'replies in correct format' do
       send_command('random hex')
+      expect(replies.last).to match(/\A[0-9a-f]{32}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('randhex')
+      expect(replies.last).to match(/\A[0-9a-f]{32}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('random x')
+      expect(replies.last).to match(/\A[0-9a-f]{32}\z/)
+    end
+
+    # The most important test, because this variant of command is the shortest
+    # and it will be used most frequently
+    it 'replies in correct format' do
+      send_command('randx')
       expect(replies.last).to match(/\A[0-9a-f]{32}\z/)
     end
   end
@@ -221,17 +285,39 @@ describe Lita::Handlers::Random, lita_handler: true do
     end
 
     it 'replies in correct format' do
-      send_command('random hx 1')
+      send_command('random x 1')
       expect(replies.last).to match(/\A[0-9a-f]{2}\z/)
     end
 
     it 'replies in correct format' do
-      send_command('random hex 2')
+      send_command('rand hex 2')
       expect(replies.last).to match(/\A[0-9a-f]{4}\z/)
     end
 
     it 'replies in correct format' do
-      send_command('random hx 10')
+      send_command('rand x 10')
+      expect(replies.last).to match(/\A[0-9a-f]{20}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('randomhex 0')
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command('randomx 1')
+      expect(replies.last).to match(/\A[0-9a-f]{2}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('randhex 2')
+      expect(replies.last).to match(/\A[0-9a-f]{4}\z/)
+    end
+
+    # The most important test, because this variant of command is the shortest
+    # and it will be used most frequently
+    it 'replies in correct format' do
+      send_command('randx 10')
       expect(replies.last).to match(/\A[0-9a-f]{20}\z/)
     end
   end
