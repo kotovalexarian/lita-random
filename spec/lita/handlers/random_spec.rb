@@ -196,4 +196,43 @@ describe Lita::Handlers::Random, lita_handler: true do
       expect(replies.last).to match %r{\A[A-Za-z0-9+/]{47}=\z}
     end
   end
+
+  it { is_expected.to route_command('random  Hx').to :route_random_hex }
+  it { is_expected.to route_command('rand  hex').to :route_random_hex }
+  it { is_expected.to route_command('rAnDoM HeX').to :route_random_hex }
+  it { is_expected.to route_command('RaNd   hx').to :route_random_hex }
+
+  it { is_expected.to route_command('random  hx  0').to :route_random_hex_n }
+  it { is_expected.to route_command('rand  hEx 284').to :route_random_hex_n }
+  it { is_expected.to route_command('rAnDoM HeX 1').to :route_random_hex_n }
+  it { is_expected.to route_command('RaNd   Hx  4928').to :route_random_hex_n }
+
+  describe '/random hex' do
+    it 'replies in correct format' do
+      send_command('random hex')
+      expect(replies.last).to match(/\A[0-9a-f]{32}\z/)
+    end
+  end
+
+  describe '/random hex <n>' do
+    it 'replies in correct format' do
+      send_command('random hex 0')
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command('random hx 1')
+      expect(replies.last).to match(/\A[0-9a-f]{2}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('random hex 2')
+      expect(replies.last).to match(/\A[0-9a-f]{4}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('random hx 10')
+      expect(replies.last).to match(/\A[0-9a-f]{20}\z/)
+    end
+  end
 end
