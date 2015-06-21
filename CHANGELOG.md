@@ -1,5 +1,21 @@
 # Change Log
 
+## [v0.3.0](https://github.com/braiden-vasco/lita-random/tree/v0.3.0) (2015-06-21)
+
+[Full Changelog](https://github.com/braiden-vasco/lita-random/compare/v0.2.0...v0.3.0)
+
+**Merged pull requests:**
+
+- Add UUID generator [\#23](https://github.com/braiden-vasco/lita-random/pull/23) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Allow spaces between commands, add more aliases [\#22](https://github.com/braiden-vasco/lita-random/pull/22) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Add hexadecimal string generator [\#21](https://github.com/braiden-vasco/lita-random/pull/21) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Add base64 generator [\#20](https://github.com/braiden-vasco/lita-random/pull/20) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Refactor regular expressions [\#19](https://github.com/braiden-vasco/lita-random/pull/19) ([braiden-vasco](https://github.com/braiden-vasco))
+
 ## [v0.2.0](https://github.com/braiden-vasco/lita-random/tree/v0.2.0) (2015-06-21)
 
 [Full Changelog](https://github.com/braiden-vasco/lita-random/compare/v0.1.0...v0.2.0)
