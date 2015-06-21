@@ -62,5 +62,5 @@ Lita: 13.458799783677263
 You: lita random base64
 Lite: 56wnZVVVStKG5+I6L4LVGw==
 You: lita random base64 10
-You: NMkIhB+iG2VNpg==
+Lita: NMkIhB+iG2VNpg==
 ```
