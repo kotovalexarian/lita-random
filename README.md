@@ -26,10 +26,10 @@ gem 'lita-random', '~> 0.2.0'
   random float number, greater or equal to 0 and lesser than 1
 
 - `random <to>` -
-  random integer number, greater or equal to 0 and lesser than `to`
+  random integer or float number, greater or equal to 0 and lesser than `to`
 
 - `random <from> <to>` -
-  random integer number, greater or equal to `from` and lesser than `to`
+  random integer or float number, greater or equal to `from` and lesser than `to`
 
 Command `random` has alias `rand`
 
