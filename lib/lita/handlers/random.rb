@@ -46,26 +46,27 @@ module Lita
         response.reply(::Random.rand(from...to).to_s)
       end
 
-      route(/^rand(om)?\s+base64$/i, :route_random_base64, command: true)
+      route(/^rand(om)?\s*b(ase)?64$/i, :route_random_base64, command: true)
       def route_random_base64(response)
         response.reply(SecureRandom.base64)
       end
 
-      route(/^rand(om)?\s+base64\s+(\d+)$/i,
+      route(/^rand(om)?\s*b(ase)?64\s+(?<n>\d+)$/i,
             :route_random_base64_n, command: true)
       def route_random_base64_n(response)
-        n = response.matches[0][1].to_i
+        n = response.matches[0][0].to_i
         response.reply(SecureRandom.base64(n))
       end
 
-      route(/^rand(om)?\s+he?x$/i, :route_random_hex, command: true)
+      route(/^rand(om)?\s*(he?)?x$/i, :route_random_hex, command: true)
       def route_random_hex(response)
         response.reply(SecureRandom.hex)
       end
 
-      route(/^rand(om)?\s+he?x\s+(\d+)$/i, :route_random_hex_n, command: true)
+      route(/^rand(om)?\s*(he?)?x\s+(?<n>\d+)$/i,
+            :route_random_hex_n, command: true)
       def route_random_hex_n(response)
-        n = response.matches[0][1].to_i
+        n = response.matches[0][0].to_i
         response.reply(SecureRandom.hex(n))
       end
     end
