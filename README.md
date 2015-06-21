@@ -47,6 +47,13 @@ Command `hex` has aliases `hx` and `x`
 * `random hex <n=16>` -
   random hexadecimal string with length `n * 2`
 
+Command `uuid` has alias `uid`
+
+* `random uuid`
+  v4 random UUID (Universally Unique IDentifier). The version 4 UUID
+  is purely random (except the version). It doesn’t contain
+  meaningful information such as MAC address, time, etc.
+
 ### Examples
 
 ```
@@ -78,4 +85,7 @@ You: lita random hex
 Lita: 7d6f39cf53303db862bac5e1b36eb0fa
 You: lita randx 10
 Lita: 0d8297837d6e63b8c25b
+
+You: lita random uuid
+Lita: f1281565-3c8a-475d-a1aa-565ff840a42c
 ```

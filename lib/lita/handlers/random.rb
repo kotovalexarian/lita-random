@@ -69,6 +69,11 @@ module Lita
         n = response.matches[0][0].to_i
         response.reply(SecureRandom.hex(n))
       end
+
+      route(/^rand(om)?\s*u?uid$/i, :route_random_uuid, command: true)
+      def route_random_uuid(response)
+        response.reply(SecureRandom.uuid)
+      end
     end
 
     Lita.register_handler(Random)
