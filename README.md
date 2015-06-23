@@ -17,7 +17,7 @@ At first, see the documentation for Lita: https://docs.lita.io/
 Add **lita-random** to your Lita instance's Gemfile:
 
 ```ruby
-gem 'lita-random', '~> 0.3.0'
+gem 'lita-random', '~> 0.4.0'
 ```
 
 ### Commands
@@ -49,10 +49,19 @@ Command `hex` has aliases `hx` and `x`
 
 Command `uuid` has alias `uid`
 
-* `random uuid`
+* `random uuid` -
   v4 random UUID (Universally Unique IDentifier). The version 4 UUID
   is purely random (except the version). It doesn’t contain
   meaningful information such as MAC address, time, etc.
+
+Command `password` has alias `pass`
+
+* `random password <n=16>` -
+  random password with length `n` containing characters
+  in upper and lower case, and digits
+
+* `random smart password <n=8>` -
+  random pronounceable password with a minimum length of `n`
 
 ### Examples
 
@@ -88,4 +97,14 @@ Lita: 0d8297837d6e63b8c25b
 
 You: lita random uuid
 Lita: f1281565-3c8a-475d-a1aa-565ff840a42c
+
+You: lita random password
+Lita: TXXBu7XEBdwFF7fP
+You: lita randpass 8
+Lita: 7lFateFs
+
+You: lita random smart password
+Lita: mospowot
+You: lita random smartpass 16
+Lita: jophemyrdivezagi
 ```

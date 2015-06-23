@@ -9,8 +9,42 @@ module Lita
     ##
     # Generator of random numbers and strings for the Lita chat bot.
     #
-    class Random < Handler
-      route(/^rand(om)?$/i, :route_random, command: true)
+    class Random < Handler # rubocop:disable Metrics/ClassLength
+      HELP = {
+        'random' =>
+          'random float number, greater or equal to 0 and lesser than 1',
+
+        'random <to>' =>
+          'random integer or float number, ' \
+          'greater or equal to 0 and lesser than `to`',
+
+        'random <from> <to>' =>
+          'random integer or float number, ' \
+          'greater or equal to `from` and lesser than `to`',
+
+        'random base64 <n=16>' =>
+          'random base64 string, length of source string is n, ' \
+          'length of result is about `n * 4 / 3` ' \
+          '(24 with default value of `n`)',
+
+        'random hex <n=16>' =>
+          'random hexadecimal string with length `n * 2`',
+
+        'random uuid' =>
+          'v4 random UUID (Universally Unique IDentifier). ' \
+          'The version 4 UUID is purely random (except the version). ' \
+          'It doesn’t contain meaningful information ' \
+          'such as MAC address, time, etc.',
+
+        'random password <n=16>' =>
+          'random password with length `n` containing characters ' \
+          'in upper and lower case, and digits',
+
+        'random smart password <n=8>' =>
+          'random pronounceable password with a minimum length of `n`',
+      }
+
+      route(/^rand(om)?$/i, :route_random, command: true, help: HELP)
       def route_random(response)
         response.reply(::Random.rand.to_s)
       end
@@ -73,6 +107,58 @@ module Lita
       route(/^rand(om)?\s*u?uid$/i, :route_random_uuid, command: true)
       def route_random_uuid(response)
         response.reply(SecureRandom.uuid)
+      end
+
+      route(/^rand(om)?\s*smart\s*pass(word)?$/i,
+            :route_random_smart_pass, command: true)
+      def route_random_smart_pass(response)
+        response.reply(smart_password)
+      end
+
+      route(/^rand(om)?\s*smart\s*pass(word)?\s+(?<n>\d+)$/i,
+            :route_random_smart_pass_n, command: true)
+      def route_random_smart_pass_n(response)
+        min_length = response.matches[0][0].to_i
+        response.reply(smart_password(min_length))
+      end
+
+      route(/^rand(om)?\s*pass(word)?$/i, :route_random_pass, command: true)
+      def route_random_pass(response)
+        response.reply(password)
+      end
+
+      route(/^rand(om)?\s*pass(word)?\s+(?<n>\d+)$/i,
+            :route_random_pass_n, command: true)
+      def route_random_pass_n(response)
+        length = response.matches[0][0].to_i
+        response.reply(password(length))
+      end
+
+    protected
+
+      SMART_PASS_SEQS = {
+        false => %w(
+          b c d f g h j k l m n p qu r s t v w x z
+          ch cr fr nd ng nk nt ph pr rd sh sl sp st th tr lt
+        ),
+        true => %w(a e i o u y),
+      }
+
+      def smart_password(min_length = 8)
+        password = ''
+        sequence_id = false
+        while password.length < min_length
+          sequence = SMART_PASS_SEQS[sequence_id]
+          password << sequence.sample
+          sequence_id = !sequence_id
+        end
+        password
+      end
+
+      PASS_CHARS = [*'a'..'z', *'A'..'Z', *'0'..'9']
+
+      def password(length = 16)
+        (0...length).map { |_| PASS_CHARS.sample }.join
       end
     end
 

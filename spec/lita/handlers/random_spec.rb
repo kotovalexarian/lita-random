@@ -322,6 +322,10 @@ describe Lita::Handlers::Random, lita_handler: true do
     end
   end
 
+  ##################
+  #  /random uuid
+  ##################
+
   it { is_expected.to route_command('random  uuid').to :route_random_uuid }
   it { is_expected.to route_command('rand  uUiD').to :route_random_uuid }
   it { is_expected.to route_command('rAnDoM uid').to :route_random_uuid }
@@ -337,6 +341,196 @@ describe Lita::Handlers::Random, lita_handler: true do
       send_command('random uuid')
       expect(replies.last)
         .to match(/\A[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}\z/)
+    end
+  end
+
+  ############################
+  #  /random smart password
+  ############################
+
+  it do
+    is_expected.to route_command('random smart password')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('RaNdOmSmArT PaSs')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('rAnDoM SmArTpAsSwOrD')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('randomsmartpass')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('rANd SMarT paSS')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('randsmart password')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('rand smartpass')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('RanDSmaRTpAsSwORd')
+      .to :route_random_smart_pass
+  end
+
+  describe '/random smart password' do
+    it 'replies in correct format' do
+      send_command('random smart password')
+      expect(replies.last).to match(/\A[a-z]{8,9}\z/)
+    end
+  end
+
+  ################################
+  #  /random smart password <n>
+  ################################
+
+  it do
+    is_expected.to route_command('random smart password 0')
+      .to :route_random_smart_pass_n
+  end
+
+  it do
+    is_expected.to route_command('RaNdOmSmArT PaSs   0')
+      .to :route_random_smart_pass_n
+  end
+
+  it do
+    is_expected.to route_command('rAnDoM SmArTpAsSwOrD 16482')
+      .to :route_random_smart_pass_n
+  end
+
+  it do
+    is_expected.to route_command('randomsmartpass   1')
+      .to :route_random_smart_pass_n
+  end
+
+  it do
+    is_expected.to route_command('rANd SMarT paSS 148')
+      .to :route_random_smart_pass_n
+  end
+
+  it do
+    is_expected.to route_command('randsmart password   0')
+      .to :route_random_smart_pass_n
+  end
+
+  it do
+    is_expected.to route_command('rand smartpass 1')
+      .to :route_random_smart_pass_n
+  end
+
+  it do
+    is_expected.to route_command('RanDSmaRTpAsSwORd   137')
+      .to :route_random_smart_pass_n
+  end
+
+  describe '/random smart password <n>' do
+    it 'replies in correct format' do
+      send_command('rAndoM sMarT pAssWorD 0')
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command('raNdsMaRTpasS 1')
+      expect(replies.last).to match(/\A[a-z]{1,2}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('rand smart pass 2')
+      expect(replies.last).to match(/\A[a-z]{2}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('randomsmartpassword 3')
+      expect(replies.last).to match(/\A[a-z]{3,4}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('randomsmart password 4')
+      expect(replies.last).to match(/\A[a-z]{4,5}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('random smartpass 16')
+      expect(replies.last).to match(/\A[a-z]{16,17}\z/)
+    end
+  end
+
+  ######################
+  #  /random password
+  ######################
+
+  it { is_expected.to route_command('RaNdOm pAsSwOrD').to :route_random_pass }
+  it { is_expected.to route_command('rAnD PaSsWoRd').to :route_random_pass }
+  it { is_expected.to route_command('RanDOm PasS').to :route_random_pass }
+  it { is_expected.to route_command('RaNd pAsS').to :route_random_pass }
+
+  it { is_expected.to route_command('RanDOmpASswORd').to :route_random_pass }
+  it { is_expected.to route_command('rAndpAsSWord').to :route_random_pass }
+  it { is_expected.to route_command('RanDomPass').to :route_random_pass }
+  it { is_expected.to route_command('rANdpASs').to :route_random_pass }
+
+  describe '/random password' do
+    it 'replies in correct format' do
+      send_command('random password')
+      expect(replies.last).to match(/\A[\w\d]{16}\z/)
+    end
+  end
+
+  ##########################
+  #  /random password <n>
+  ##########################
+
+  it do
+    is_expected.to route_command('RaNdOm pAsSwOrD  0').to :route_random_pass_n
+  end
+
+  it { is_expected.to route_command('rAnD PaSsWoRd 1').to :route_random_pass_n }
+  it { is_expected.to route_command('RanDOm PasS 123').to :route_random_pass_n }
+  it { is_expected.to route_command('RaNd pAsS  4567').to :route_random_pass_n }
+
+  it do
+    is_expected.to route_command('RanDOmpASswORd  890').to :route_random_pass_n
+  end
+
+  it { is_expected.to route_command('rAndpAsSWord 09').to :route_random_pass_n }
+  it { is_expected.to route_command('RanDomPass  876').to :route_random_pass_n }
+  it { is_expected.to route_command('rANdpASs   5432').to :route_random_pass_n }
+
+  describe '/random password' do
+    it 'replies in correct format' do
+      send_command('RaNdOm pAsSwOrD 0')
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command('rANdOMpaSs 1')
+      expect(replies.last).to match(/\A[\w\d]{1}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('RanD paSSwoRD 2')
+      expect(replies.last).to match(/\A[\w\d]{2}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('rAnDpAsS 32')
+      expect(replies.last).to match(/\A[\w\d]{32}\z/)
     end
   end
 end
