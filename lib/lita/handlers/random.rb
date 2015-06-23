@@ -9,7 +9,7 @@ module Lita
     ##
     # Generator of random numbers and strings for the Lita chat bot.
     #
-    class Random < Handler
+    class Random < Handler # rubocop:disable Metrics/ClassLength
       HELP = {
         'random' =>
           'random float number, greater or equal to 0 and lesser than 1',
@@ -35,6 +35,13 @@ module Lita
           'The version 4 UUID is purely random (except the version). ' \
           'It doesn’t contain meaningful information ' \
           'such as MAC address, time, etc.',
+
+        'random password <n=16>' =>
+          'random password with length `n` containing characters ' \
+          'in upper and lower case, and digits',
+
+        'random smart password <n=8>' =>
+          'random pronounceable password with a minimum length of `n`',
       }
 
       route(/^rand(om)?$/i, :route_random, command: true, help: HELP)
