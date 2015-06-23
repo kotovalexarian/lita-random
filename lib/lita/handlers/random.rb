@@ -74,6 +74,40 @@ module Lita
       def route_random_uuid(response)
         response.reply(SecureRandom.uuid)
       end
+
+      route(/^rand(om)?\s*smart\s*pass(word)?$/i,
+            :route_random_smart_pass, command: true)
+      def route_random_smart_pass(response)
+        response.reply(smart_password)
+      end
+
+      route(/^rand(om)?\s*smart\s*pass(word)?\s+(?<n>\d+)$/i,
+            :route_random_smart_pass_n, command: true)
+      def route_random_smart_pass_n(response)
+        min_length = response.matches[0][0].to_i
+        response.reply(smart_password(min_length))
+      end
+
+    protected
+
+      SMART_PASS_SEQS = {
+        false => %w(
+          b c d f g h j k l m n p qu r s t v w x z
+          ch cr fr nd ng nk nt ph pr rd sh sl sp st th tr lt
+        ),
+        true => %w(a e i o u y),
+      }
+
+      def smart_password(min_length = 8)
+        password = ''
+        sequence_id = false
+        while password.length < min_length
+          sequence = SMART_PASS_SEQS[sequence_id]
+          password << sequence.sample
+          sequence_id = !sequence_id
+        end
+        password
+      end
     end
 
     Lita.register_handler(Random)
