@@ -49,10 +49,15 @@ Command `hex` has aliases `hx` and `x`
 
 Command `uuid` has alias `uid`
 
-* `random uuid`
+* `random uuid` -
   v4 random UUID (Universally Unique IDentifier). The version 4 UUID
   is purely random (except the version). It doesn’t contain
   meaningful information such as MAC address, time, etc.
+
+Command `password` has alias `pass`
+
+* `random smart password <n=16>` -
+  random pronounceable password with a minimum length of `n`
 
 ### Examples
 
@@ -88,4 +93,9 @@ Lita: 0d8297837d6e63b8c25b
 
 You: lita random uuid
 Lita: f1281565-3c8a-475d-a1aa-565ff840a42c
+
+You: lita random smart password
+Lita: mospowot
+You: lita random smartpass 16
+Lita: jophemyrdivezagi
 ```
