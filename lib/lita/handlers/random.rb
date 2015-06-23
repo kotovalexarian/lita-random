@@ -88,6 +88,18 @@ module Lita
         response.reply(smart_password(min_length))
       end
 
+      route(/^rand(om)?\s*pass(word)?$/i, :route_random_pass, command: true)
+      def route_random_pass(response)
+        response.reply(password)
+      end
+
+      route(/^rand(om)?\s*pass(word)?\s+(?<n>\d+)$/i,
+            :route_random_pass_n, command: true)
+      def route_random_pass_n(response)
+        length = response.matches[0][0].to_i
+        response.reply(password(length))
+      end
+
     protected
 
       SMART_PASS_SEQS = {
@@ -107,6 +119,12 @@ module Lita
           sequence_id = !sequence_id
         end
         password
+      end
+
+      PASS_CHARS = [*'a'..'z', *'A'..'Z', *'0'..'9']
+
+      def password(length = 16)
+        (0...length).map { |_| PASS_CHARS.sample }.join
       end
     end
 

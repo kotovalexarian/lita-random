@@ -56,6 +56,10 @@ Command `uuid` has alias `uid`
 
 Command `password` has alias `pass`
 
+* `random password <n=16>` -
+  random password with length `n` containing characters
+  in upper and lower case, and digits
+
 * `random smart password <n=16>` -
   random pronounceable password with a minimum length of `n`
 
@@ -93,6 +97,11 @@ Lita: 0d8297837d6e63b8c25b
 
 You: lita random uuid
 Lita: f1281565-3c8a-475d-a1aa-565ff840a42c
+
+You: lita random password
+Lita: TXXBu7XEBdwFF7fP
+You: lita randpass 8
+Lita: 7lFateFs
 
 You: lita random smart password
 Lita: mospowot
