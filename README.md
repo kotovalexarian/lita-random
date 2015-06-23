@@ -60,7 +60,7 @@ Command `password` has alias `pass`
   random password with length `n` containing characters
   in upper and lower case, and digits
 
-* `random smart password <n=16>` -
+* `random smart password <n=8>` -
   random pronounceable password with a minimum length of `n`
 
 ### Examples
