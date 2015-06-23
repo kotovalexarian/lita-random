@@ -1,5 +1,17 @@
 # Change Log
 
+## [v0.4.0](https://github.com/braiden-vasco/lita-random/tree/v0.4.0) (2015-06-23)
+
+[Full Changelog](https://github.com/braiden-vasco/lita-random/compare/v0.3.0...v0.4.0)
+
+**Merged pull requests:**
+
+- Add password generator [\#28](https://github.com/braiden-vasco/lita-random/pull/28) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Add smart password generator [\#27](https://github.com/braiden-vasco/lita-random/pull/27) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Add help for commands [\#26](https://github.com/braiden-vasco/lita-random/pull/26) ([braiden-vasco](https://github.com/braiden-vasco))
+
 ## [v0.3.0](https://github.com/braiden-vasco/lita-random/tree/v0.3.0) (2015-06-21)
 
 [Full Changelog](https://github.com/braiden-vasco/lita-random/compare/v0.2.0...v0.3.0)
@@ -8,7 +20,7 @@
 
 - Add UUID generator [\#23](https://github.com/braiden-vasco/lita-random/pull/23) ([braiden-vasco](https://github.com/braiden-vasco))
 
-- Allow spaces between commands, add more aliases [\#22](https://github.com/braiden-vasco/lita-random/pull/22) ([braiden-vasco](https://github.com/braiden-vasco))
+- Optional spaces between commands, add more aliases [\#22](https://github.com/braiden-vasco/lita-random/pull/22) ([braiden-vasco](https://github.com/braiden-vasco))
 
 - Add hexadecimal string generator [\#21](https://github.com/braiden-vasco/lita-random/pull/21) ([braiden-vasco](https://github.com/braiden-vasco))
 
