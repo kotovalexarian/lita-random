@@ -2,6 +2,9 @@ AllCops:
   Exclude:
     - vendor/**/*
 
+Style/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
 Style/AndOr:
   Enabled: false
 
