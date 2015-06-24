@@ -22,6 +22,9 @@ module Lita
           'random integer or float number, ' \
           'greater or equal to `from` and lesser than `to`',
 
+        'random case <s>' =>
+          'randomize case of each character of string `s`',
+
         'random base64 <n=16>' =>
           'random base64 string, length of source string is n, ' \
           'length of result is about `n * 4 / 3` ' \
