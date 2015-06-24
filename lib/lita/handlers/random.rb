@@ -22,6 +22,9 @@ module Lita
           'random integer or float number, ' \
           'greater or equal to `from` and lesser than `to`',
 
+        'random case <s>' =>
+          'randomize case of each character of string `s`',
+
         'random base64 <n=16>' =>
           'random base64 string, length of source string is n, ' \
           'length of result is about `n * 4 / 3` ' \
@@ -42,6 +45,12 @@ module Lita
 
         'random smart password <n=8>' =>
           'random pronounceable password with a minimum length of `n`',
+
+        'shuffle <array, ...>' =>
+          'new array with elements of `array` shuffled',
+
+        'sample <n=1> <array, ...>' =>
+          'choose `n` random elements from `array`',
       }
 
       route(/^rand(om)?$/i, :route_random, command: true, help: HELP)
@@ -78,6 +87,12 @@ module Lita
         from = matches[0].to_f
         to = matches[1].to_f
         response.reply(::Random.rand(from...to).to_s)
+      end
+
+      route(/^rand(om)?\s*case(\s+(?<s>.*))?$/i,
+            :route_random_case, command: true)
+      def route_random_case(response)
+        response.reply(random_case(response.matches[0][0] || ''))
       end
 
       route(/^rand(om)?\s*b(ase)?64$/i, :route_random_base64, command: true)
@@ -134,7 +149,31 @@ module Lita
         response.reply(password(length))
       end
 
+      route(/^shuffle(\s+(?<array>.*))?$/i, :route_shuffle, command: true)
+      def route_shuffle(response)
+        s = response.matches[0][0]
+        a = s ? s.split(',').map(&:strip) : []
+        response.reply(a.shuffle.join(', '))
+      end
+
+      route(/^sample(\s+((?<n>\d+)\s+)?(?<array>.*))?$/i,
+            :route_sample, command: true)
+      def route_sample(response)
+        matches = response.matches[0]
+        n = matches[0]
+        s = matches[1]
+        a = s ? s.split(',').map(&:strip) : []
+        result = n ? a.sample(n.to_i).join(', ') : a.sample.to_s
+        response.reply(result)
+      end
+
     protected
+
+      def random_case(s)
+        s.each_char.map do |c|
+          ::Random.rand(2).zero? ? c.upcase : c.downcase
+        end.join
+      end
 
       SMART_PASS_SEQS = {
         false => %w(

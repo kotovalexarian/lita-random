@@ -1,5 +1,19 @@
 # Change Log
 
+## [v0.5.0](https://github.com/braiden-vasco/lita-random/tree/v0.5.0) (2015-06-24)
+
+[Full Changelog](https://github.com/braiden-vasco/lita-random/compare/v0.4.0...v0.5.0)
+
+**Merged pull requests:**
+
+- Add command "random case" [\#34](https://github.com/braiden-vasco/lita-random/pull/34) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Add command "sample" [\#33](https://github.com/braiden-vasco/lita-random/pull/33) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Add command "shuffle" [\#31](https://github.com/braiden-vasco/lita-random/pull/31) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Move development dependencies to gemspec [\#30](https://github.com/braiden-vasco/lita-random/pull/30) ([braiden-vasco](https://github.com/braiden-vasco))
+
 ## [v0.4.0](https://github.com/braiden-vasco/lita-random/tree/v0.4.0) (2015-06-23)
 
 [Full Changelog](https://github.com/braiden-vasco/lita-random/compare/v0.3.0...v0.4.0)

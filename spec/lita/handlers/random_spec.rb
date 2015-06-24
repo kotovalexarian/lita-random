@@ -137,6 +137,66 @@ describe Lita::Handlers::Random, lita_handler: true do
     end
   end
 
+  #####################
+  #  /random case <s>
+  #####################
+
+  it { is_expected.to route_command('random  case').to :route_random_case }
+  it { is_expected.to route_command('rand  case').to :route_random_case }
+  it { is_expected.to route_command('rAnDoM cAsE').to :route_random_case }
+  it { is_expected.to route_command('RaNd   CaSe').to :route_random_case }
+
+  it { is_expected.to route_command('randomcase').to :route_random_case }
+  it { is_expected.to route_command('randcase').to :route_random_case }
+  it { is_expected.to route_command('rAnDoMcAsE').to :route_random_case }
+  it { is_expected.to route_command('RaNdCaSe').to :route_random_case }
+
+  describe '/random case <s>' do
+    it 'replies in correct format' do
+      send_command 'random case'
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command 'RaNd CaSe'
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command 'RaNdOmCaSe'
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command 'rAnDcAsE'
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command 'random case  1'
+      expect(replies.last).to eq '1'
+    end
+
+    it 'replies in correct format' do
+      send_command 'RaNd CaSe  foo'
+      expect(replies.last).to match(/\Afoo\z/i)
+    end
+
+    it 'replies in correct format' do
+      send_command 'RaNdOmCaSe foo  bar'
+      expect(replies.last).to match(/\Afoo  bar\z/i)
+    end
+
+    it 'replies in correct format' do
+      send_command 'rAnDcAsE  12345'
+      expect(replies.last).to eq '12345'
+    end
+  end
+
+  ##########################
+  #  /random base64 <n=16>
+  ##########################
+
   it { is_expected.to route_command('random  base64').to :route_random_base64 }
   it { is_expected.to route_command('rand  base64').to :route_random_base64 }
   it { is_expected.to route_command('rAnDoM bAsE64').to :route_random_base64 }
@@ -233,6 +293,10 @@ describe Lita::Handlers::Random, lita_handler: true do
       expect(replies.last).to match %r{\A[A-Za-z0-9+/]{47}=\z}
     end
   end
+
+  #######################
+  #  /random hex <n=16>
+  #######################
 
   it { is_expected.to route_command('random  Hx').to :route_random_hex }
   it { is_expected.to route_command('rand  hex').to :route_random_hex }
@@ -531,6 +595,163 @@ describe Lita::Handlers::Random, lita_handler: true do
     it 'replies in correct format' do
       send_command('rAnDpAsS 32')
       expect(replies.last).to match(/\A[\w\d]{32}\z/)
+    end
+  end
+
+  ###########################
+  #  /shuffle <array, ...>
+  ###########################
+
+  it { is_expected.to route_command('sHuFfLe').to :route_shuffle }
+  it { is_expected.to route_command('ShUfFlE   a').to :route_shuffle }
+  it { is_expected.to route_command('sHUfFLe A,   b').to :route_shuffle }
+  it { is_expected.to route_command('ShuFflE  a, B,  c').to :route_shuffle }
+  it { is_expected.to route_command('shUFfLE 1').to :route_shuffle }
+  it { is_expected.to route_command('SHuFfle   1, b').to :route_shuffle }
+  it { is_expected.to route_command('shUffLe 1,   2, 3').to :route_shuffle }
+  it { is_expected.to route_command('shufFlE 1,b,C').to :route_shuffle }
+  it { is_expected.to route_command('sHuffle  1,2,3').to :route_shuffle }
+
+  describe '/shuffle <array, ...>' do
+    it 'replies in correct format' do
+      send_command 'shuFFLe'
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command 'sHufflE a'
+      expect(replies.last).to eq 'a'
+    end
+
+    it 'replies in correct format' do
+      send_command 'shuffle 1'
+      expect(replies.last).to eq '1'
+    end
+
+    it 'replies in correct format' do
+      send_command 'shuffle Foo, 1'
+      expect(replies.last).to match(/^(Foo|1), (Foo|1)$/)
+      expect(replies.last.split(',').map(&:strip)).to match_array %w(Foo 1)
+    end
+
+    it 'replies in correct format' do
+      send_command 'SHUFFLE 123, a'
+      expect(replies.last).to match(/^(123|a), (123|a)$/)
+      expect(replies.last.split(',').map(&:strip)).to match_array %w(123 a)
+    end
+
+    it 'replies in correct format' do
+      send_command 'ShUfFLe 1488,foObar'
+      expect(replies.last).to match(/^(1488|foObar), (1488|foObar)$/)
+      expect(replies.last.split(',').map(&:strip))
+        .to match_array %w(1488 foObar)
+    end
+  end
+
+  #########################
+  #  /sample <array, ...>
+  #########################
+
+  it { is_expected.to route_command('sAmPlE').to :route_sample }
+  it { is_expected.to route_command('SaMpLe   a').to :route_sample }
+  it { is_expected.to route_command('sAMpLE A,   b').to :route_sample }
+  it { is_expected.to route_command('SamPle  a, B,  c').to :route_sample }
+  it { is_expected.to route_command('saMPle 1').to :route_sample }
+  it { is_expected.to route_command('SAmpLE   1, b').to :route_sample }
+  it { is_expected.to route_command('saMplE 1,   2, 3').to :route_sample }
+  it { is_expected.to route_command('samPLe 1,b,C').to :route_sample }
+  it { is_expected.to route_command('sAmple  1,2,3').to :route_sample }
+
+  describe '/sample <array, ...>' do
+    it 'replies in correct format' do
+      send_command 'sAmplE'
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command 'sAMpLe  123'
+      expect(replies.last).to eq '123'
+    end
+
+    it 'replies in correct format' do
+      send_command 'SAMPLE  foo  bar'
+      expect(replies.last).to eq 'foo  bar'
+    end
+
+    it 'replies in correct format' do
+      send_command 'SAMPLE  foo  bar,car  cdr'
+      expect(['foo  bar', 'car  cdr'])
+        .to include replies.last
+    end
+
+    it 'replies in correct format' do
+      send_command 'SAMPLE  foo  bar   ,   car  cdr'
+      expect(['foo  bar', 'car  cdr'])
+        .to include replies.last
+    end
+
+    it 'replies in correct format' do
+      send_command 'SAMPLE  foo  bar,car  cdr,123  456'
+      expect(['foo  bar', 'car  cdr', '123  456'])
+        .to include replies.last
+    end
+
+    it 'replies in correct format' do
+      send_command 'SAMPLE  foo  bar  ,car  cdr,   123  456'
+      expect(['foo  bar', 'car  cdr', '123  456'])
+        .to include replies.last
+    end
+  end
+
+  #############################
+  #  /sample <n> <array, ...>
+  #############################
+
+  it { is_expected.to route_command('SaMpLe 1  a').to :route_sample }
+  it { is_expected.to route_command('sAMpLE  1703 A,   b').to :route_sample }
+  it { is_expected.to route_command('SamPle   2 a, B,  c').to :route_sample }
+  it { is_expected.to route_command('saMPle 98 1').to :route_sample }
+  it { is_expected.to route_command('SAmpLE  746  1, b').to :route_sample }
+  it { is_expected.to route_command('saMplE 9 1,   2, 3').to :route_sample }
+  it { is_expected.to route_command('samPLe  3 1,b,C').to :route_sample }
+  it { is_expected.to route_command('sAmple 147  1,2,3').to :route_sample }
+
+  describe '/sample <n> <array, ...>' do
+    it 'replies in correct format' do
+      send_command 'sample  0  a'
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command 'sample  1  foo'
+      expect(replies.last).to eq 'foo'
+    end
+
+    it 'replies in correct format' do
+      send_command 'sample  2  a'
+      expect(replies.last).to eq 'a'
+    end
+
+    it 'replies in correct format' do
+      send_command 'sample  0  foo,bar'
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command 'sample  1  foo,bar'
+      expect(%w(foo bar)).to include replies.last
+    end
+
+    it 'replies in correct format' do
+      send_command 'sample  2  foo  ,  bar'
+      expect(replies.last.split(',').map(&:lstrip))
+        .to match_array %w(foo bar)
+    end
+
+    it 'replies in correct format' do
+      send_command 'sample  3  a,b'
+      expect(replies.last.split(',').map(&:lstrip))
+        .to match_array %w(a b)
     end
   end
 end

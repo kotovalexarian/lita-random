@@ -17,7 +17,7 @@ At first, see the documentation for Lita: https://docs.lita.io/
 Add **lita-random** to your Lita instance's Gemfile:
 
 ```ruby
-gem 'lita-random', '~> 0.4.0'
+gem 'lita-random', '~> 0.5.0'
 ```
 
 ### Commands
@@ -35,6 +35,9 @@ Command `random` has alias `rand`
 
 * `random <from> <to>` -
   random integer or float number, greater or equal to `from` and lesser than `to`
+
+* `random case <s>` -
+  randomize case of each character of string `s`
 
 Command `base64` has alias `b64`
 
@@ -63,6 +66,12 @@ Command `password` has alias `pass`
 * `random smart password <n=8>` -
   random pronounceable password with a minimum length of `n`
 
+* `shuffle <array, ...>` -
+  new array with elements of `array` shuffled
+
+* `sample <n=1> <array, ...>` -
+  choose `n` random elements from `array`
+
 ### Examples
 
 ```
@@ -84,6 +93,9 @@ You: lita rand 1000 2000
 Lita: 1240
 You: lita random 12 13.5
 Lita: 13.458799783677263
+
+You: lita random case foo bar car cdr
+Lita: FoO bAr CAr Cdr
 
 You: lita random base64
 Lite: 56wnZVVVStKG5+I6L4LVGw==
@@ -107,4 +119,12 @@ You: lita random smart password
 Lita: mospowot
 You: lita random smartpass 16
 Lita: jophemyrdivezagi
+
+You: lita shuffle 1, 2, 3, 4, 5
+Lita: 3, 1, 5, 2, 4
+
+You: lita sample 1, 2, 3, 4, 5
+Lita: 4
+You: lita sample 3  1, 2, 3, 4, 5
+Lita: 5, 1, 2
 ```
