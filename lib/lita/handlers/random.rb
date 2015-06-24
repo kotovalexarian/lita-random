@@ -45,6 +45,9 @@ module Lita
 
         'shuffle <array, ...>' =>
           'new array with elements of `array` shuffled',
+
+        'sample <n=1> <array, ...>' =>
+          'choose `n` random elements from `array`',
       }
 
       route(/^rand(om)?$/i, :route_random, command: true, help: HELP)
@@ -142,6 +145,17 @@ module Lita
         s = response.matches[0][0]
         a = s ? s.split(',').map(&:strip) : []
         response.reply(a.shuffle.join(', '))
+      end
+
+      route(/^sample(\s+((?<n>\d+)\s+)?(?<array>.*))?$/i,
+            :route_sample, command: true)
+      def route_sample(response)
+        matches = response.matches[0]
+        n = matches[0]
+        s = matches[1]
+        a = s ? s.split(',').map(&:strip) : []
+        result = n ? a.sample(n.to_i).join(', ') : a.sample.to_s
+        response.reply(result)
       end
 
     protected
