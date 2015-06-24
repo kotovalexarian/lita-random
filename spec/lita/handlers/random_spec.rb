@@ -583,4 +583,59 @@ describe Lita::Handlers::Random, lita_handler: true do
         .to match_array %w(1488 foObar)
     end
   end
+
+  #########################
+  #  /sample <array, ...>
+  #########################
+
+  it { is_expected.to route_command('sAmPlE').to :route_sample }
+  it { is_expected.to route_command('SaMpLe   a').to :route_sample }
+  it { is_expected.to route_command('sAMpLE A,   b').to :route_sample }
+  it { is_expected.to route_command('SamPle  a, B,  c').to :route_sample }
+  it { is_expected.to route_command('saMPle 1').to :route_sample }
+  it { is_expected.to route_command('SAmpLE   1, b').to :route_sample }
+  it { is_expected.to route_command('saMplE 1,   2, 3').to :route_sample }
+  it { is_expected.to route_command('samPLe 1,b,C').to :route_sample }
+  it { is_expected.to route_command('sAmple  1,2,3').to :route_sample }
+
+  describe '/sample <array, ...>' do
+    it 'replies in correct format' do
+      send_command 'sAmplE'
+      expect(replies.last).to eq ''
+    end
+
+    it 'replies in correct format' do
+      send_command 'sAMpLe  123'
+      expect(replies.last).to eq '123'
+    end
+
+    it 'replies in correct format' do
+      send_command 'SAMPLE  foo  bar'
+      expect(replies.last).to eq 'foo  bar'
+    end
+
+    it 'replies in correct format' do
+      send_command 'SAMPLE  foo  bar,car  cdr'
+      expect(['foo  bar', 'car  cdr'])
+        .to include replies.last
+    end
+
+    it 'replies in correct format' do
+      send_command 'SAMPLE  foo  bar   ,   car  cdr'
+      expect(['foo  bar', 'car  cdr'])
+        .to include replies.last
+    end
+
+    it 'replies in correct format' do
+      send_command 'SAMPLE  foo  bar,car  cdr,123  456'
+      expect(['foo  bar', 'car  cdr', '123  456'])
+        .to include replies.last
+    end
+
+    it 'replies in correct format' do
+      send_command 'SAMPLE  foo  bar  ,car  cdr,   123  456'
+      expect(['foo  bar', 'car  cdr', '123  456'])
+        .to include replies.last
+    end
+  end
 end
