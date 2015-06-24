@@ -119,4 +119,6 @@ Lita: 3, 1, 5, 2, 4
 
 You: lita sample 1, 2, 3, 4, 5
 Lita: 4
+You: lita sample 3  1, 2, 3, 4, 5
+Lita: 5, 1, 2
 ```
