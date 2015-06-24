@@ -66,6 +66,9 @@ Command `password` has alias `pass`
 * `shuffle <array, ...>` -
   new array with elements of `array` shuffled
 
+* `sample <n=1> <array, ...>` -
+  choose `n` random elements from `array`
+
 ### Examples
 
 ```
@@ -113,4 +116,7 @@ Lita: jophemyrdivezagi
 
 You: lita shuffle 1, 2, 3, 4, 5
 Lita: 3, 1, 5, 2, 4
+
+You: lita sample 1, 2, 3, 4, 5
+Lita: 4
 ```
