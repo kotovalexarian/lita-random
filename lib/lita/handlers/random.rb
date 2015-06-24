@@ -147,11 +147,15 @@ module Lita
         response.reply(a.shuffle.join(', '))
       end
 
-      route(/^sample(\s+(?<array>.*))?$/i, :route_sample, command: true)
+      route(/^sample(\s+((?<n>\d+)\s+)?(?<array>.*))?$/i,
+            :route_sample, command: true)
       def route_sample(response)
-        s = response.matches[0][0]
+        matches = response.matches[0]
+        n = matches[0]
+        s = matches[1]
         a = s ? s.split(',').map(&:strip) : []
-        response.reply(a.sample || '')
+        result = n ? a.sample(n.to_i).join(', ') : a.sample.to_s
+        response.reply(result)
       end
 
     protected
