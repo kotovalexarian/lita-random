@@ -63,6 +63,9 @@ Command `password` has alias `pass`
 * `random smart password <n=8>` -
   random pronounceable password with a minimum length of `n`
 
+* `shuffle <array, ...>` -
+  new array with elements of `array` shuffled
+
 ### Examples
 
 ```
@@ -107,4 +110,7 @@ You: lita random smart password
 Lita: mospowot
 You: lita random smartpass 16
 Lita: jophemyrdivezagi
+
+You: lita shuffle 1, 2, 3, 4, 5
+Lita: 3, 1, 5, 2, 4
 ```
