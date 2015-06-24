@@ -22,6 +22,9 @@ module Lita
           'random integer or float number, ' \
           'greater or equal to `from` and lesser than `to`',
 
+        'random case <s>' =>
+          'randomize case of each character of string `s`',
+
         'random base64 <n=16>' =>
           'random base64 string, length of source string is n, ' \
           'length of result is about `n * 4 / 3` ' \
@@ -84,6 +87,12 @@ module Lita
         from = matches[0].to_f
         to = matches[1].to_f
         response.reply(::Random.rand(from...to).to_s)
+      end
+
+      route(/^rand(om)?\s*case(\s+(?<s>.*))?$/i,
+            :route_random_case, command: true)
+      def route_random_case(response)
+        response.reply(random_case(response.matches[0][0] || ''))
       end
 
       route(/^rand(om)?\s*b(ase)?64$/i, :route_random_base64, command: true)
@@ -159,6 +168,12 @@ module Lita
       end
 
     protected
+
+      def random_case(s)
+        s.each_char.map do |c|
+          ::Random.rand(2).zero? ? c.upcase : c.downcase
+        end.join
+      end
 
       SMART_PASS_SEQS = {
         false => %w(
