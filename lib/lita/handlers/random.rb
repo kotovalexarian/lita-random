@@ -42,6 +42,9 @@ module Lita
 
         'random smart password <n=8>' =>
           'random pronounceable password with a minimum length of `n`',
+
+        'shuffle <array, ...>' =>
+          'new array with elements of `array` shuffled',
       }
 
       route(/^rand(om)?$/i, :route_random, command: true, help: HELP)
