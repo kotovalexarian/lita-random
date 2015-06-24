@@ -42,6 +42,9 @@ module Lita
 
         'random smart password <n=8>' =>
           'random pronounceable password with a minimum length of `n`',
+
+        'shuffle <array, ...>' =>
+          'new array with elements of `array` shuffled',
       }
 
       route(/^rand(om)?$/i, :route_random, command: true, help: HELP)
@@ -132,6 +135,13 @@ module Lita
       def route_random_pass_n(response)
         length = response.matches[0][0].to_i
         response.reply(password(length))
+      end
+
+      route(/^shuffle(\s+(?<array>.*))?$/i, :route_shuffle, command: true)
+      def route_shuffle(response)
+        s = response.matches[0][0]
+        a = s ? s.split(',').map(&:strip) : []
+        response.reply(a.shuffle.join(', '))
       end
 
     protected
