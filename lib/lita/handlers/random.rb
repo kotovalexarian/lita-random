@@ -86,6 +86,12 @@ module Lita
         response.reply(::Random.rand(from...to).to_s)
       end
 
+      route(/^rand(om)?\s*case(\s+(?<s>.*))?$/i,
+            :route_random_case, command: true)
+      def route_random_case(response)
+        response.reply(random_case(response.matches[0][0] || ''))
+      end
+
       route(/^rand(om)?\s*b(ase)?64$/i, :route_random_base64, command: true)
       def route_random_base64(response)
         response.reply(SecureRandom.base64)
@@ -159,6 +165,12 @@ module Lita
       end
 
     protected
+
+      def random_case(s)
+        s.each_char.map do |c|
+          ::Random.rand(2).zero? ? c.upcase : c.downcase
+        end.join
+      end
 
       SMART_PASS_SEQS = {
         false => %w(
