@@ -45,6 +45,9 @@ module Lita
 
         'shuffle <array, ...>' =>
           'new array with elements of `array` shuffled',
+
+        'sample <n=1> <array, ...>' =>
+          'choose `n` random elements from `array`',
       }
 
       route(/^rand(om)?$/i, :route_random, command: true, help: HELP)
