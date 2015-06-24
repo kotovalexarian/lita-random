@@ -144,6 +144,13 @@ module Lita
         response.reply(a.shuffle.join(', '))
       end
 
+      route(/^sample(\s+(?<array>.*))?$/i, :route_sample, command: true)
+      def route_sample(response)
+        s = response.matches[0][0]
+        a = s ? s.split(',').map(&:strip) : []
+        response.reply(a.sample || '')
+      end
+
     protected
 
       SMART_PASS_SEQS = {
