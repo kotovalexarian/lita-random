@@ -1,3 +1,5 @@
+require 'lita-keyword-arguments'
+
 ##
 # Lita module.
 #
@@ -54,7 +56,7 @@ module Lita
       }
 
       route(
-        /^rand(om)?((\s+(?<from>\d+(\.\d+)?))?\s+(?<to>\d+(\.\d+)?))?$/i,
+        /^rand(om)?((\s+(?<from>\d+(\.\d+)?))?\s+(?<to>\d+(\.\d+)?))?/i,
         :route_random,
         command: true, help: HELP,
         kwargs: {
@@ -63,17 +65,27 @@ module Lita
         }
       )
 
-      def route_random(response)
+      def extract_argument(response, index, name)
         matches = response.matches[0]
+        kwargs = response.extensions[:kwargs]
 
-        to_numeric = lambda do |index|
-          if matches[index]
-            matches[index].send(matches[index] =~ /\./ ? :to_f : :to_i)
-          end
+        positional = matches[index]
+        kw = kwargs[name]
+
+        fail if positional && kw
+
+        raw = positional || kw
+
+        raw.send(raw =~ /\./ ? :to_f : :to_i) if raw
+      end
+
+      def route_random(response)
+        begin
+          from = extract_argument(response, 0, :from) || 0
+          to = extract_argument(response, 1, :to) || 1.0
+        rescue RuntimeError
+          return
         end
-
-        from = to_numeric.(0) || 0
-        to   = to_numeric.(1) || 1.0
 
         response.reply(::Random.rand(from...to).to_s)
       end
