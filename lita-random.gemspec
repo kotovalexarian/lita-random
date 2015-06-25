@@ -30,7 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 0.31'
   spec.add_development_dependency 'rspec', '~> 3.3'
   spec.add_development_dependency 'simplecov', '~> 0.10'
-  spec.add_development_dependency 'coveralls'
 
   spec.add_runtime_dependency 'lita', '>= 4.4'
 end
