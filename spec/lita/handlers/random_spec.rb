@@ -1,43 +1,32 @@
 describe Lita::Handlers::Random, lita_handler: true do
+  #############
+  #  /random
+  #############
+
   it { is_expected.to route_command('random').to :route_random }
   it { is_expected.to route_command('rand').to :route_random }
   it { is_expected.to route_command('RaNdOm').to :route_random }
   it { is_expected.to route_command('rAnD').to :route_random }
 
-  it { is_expected.to route_command('random  5').to :route_random_to }
-  it { is_expected.to route_command('rand   17').to :route_random_to }
-  it { is_expected.to route_command('rAnDoM  59827').to :route_random_to }
-  it { is_expected.to route_command('RanD  0').to :route_random_to }
+  it { is_expected.to route_command('random  5').to :route_random }
+  it { is_expected.to route_command('rand   17').to :route_random }
+  it { is_expected.to route_command('rAnDoM  59827').to :route_random }
+  it { is_expected.to route_command('RanD  0').to :route_random }
 
-  it { is_expected.to route_command('random  5.0').to :route_random_float_to }
-  it { is_expected.to route_command('rand 17.74826').to :route_random_float_to }
-  it { is_expected.to route_command('rAnDoM 5927.1').to :route_random_float_to }
-  it { is_expected.to route_command('RanD  0.12397').to :route_random_float_to }
+  it { is_expected.to route_command('random  5.0').to :route_random }
+  it { is_expected.to route_command('rand 17.74826').to :route_random }
+  it { is_expected.to route_command('rAnDoM 5927.1').to :route_random }
+  it { is_expected.to route_command('RanD  0.12397').to :route_random }
 
-  it { is_expected.to route_command('random    0  1').to :route_random_from_to }
-  it { is_expected.to route_command('rand 102  2695').to :route_random_from_to }
-  it { is_expected.to route_command('rANdOM  1643 0').to :route_random_from_to }
-  it { is_expected.to route_command('ranD  10   100').to :route_random_from_to }
+  it { is_expected.to route_command('random    0  1').to :route_random }
+  it { is_expected.to route_command('rand 102  2695').to :route_random }
+  it { is_expected.to route_command('rANdOM  1643 0').to :route_random }
+  it { is_expected.to route_command('ranD  10   100').to :route_random }
 
-  it do
-    is_expected.to route_command('random  0   1.0')
-      .to :route_random_float_from_to
-  end
-
-  it do
-    is_expected.to route_command('rand 102.0  25')
-      .to :route_random_float_from_to
-  end
-
-  it do
-    is_expected.to route_command('rANdOM   13.1 0')
-      .to :route_random_float_from_to
-  end
-
-  it do
-    is_expected.to route_command('ranD 10   0.5')
-      .to :route_random_float_from_to
-  end
+  it { is_expected.to route_command('random  0   1.0').to :route_random }
+  it { is_expected.to route_command('rand 102.0  25').to :route_random }
+  it { is_expected.to route_command('rANdOM   13.1 0').to :route_random }
+  it { is_expected.to route_command('ranD 10   0.5').to :route_random }
 
   describe '/random' do
     it 'replies in correct format' do
