@@ -2,11 +2,14 @@ AllCops:
   Exclude:
     - vendor/**/*
 
-Style/AccessModifierIndentation:
-  EnforcedStyle: outdent
-
 Style/AndOr:
+  Enabled: false
+
+Style/LambdaCall:
   Enabled: false
 
 Style/TrailingComma:
   Enabled: false
+
+Style/AccessModifierIndentation:
+  EnforcedStyle: outdent
