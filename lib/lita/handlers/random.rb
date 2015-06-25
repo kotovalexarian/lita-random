@@ -53,8 +53,16 @@ module Lita
           'choose `n` random elements from `array`',
       }
 
-      route(/^rand(om)?((\s+(?<from>\d+(\.\d+)?))?\s+(?<to>\d+(\.\d+)?))?$/i,
-            :route_random, command: true, help: HELP)
+      route(
+        /^rand(om)?((\s+(?<from>\d+(\.\d+)?))?\s+(?<to>\d+(\.\d+)?))?$/i,
+        :route_random,
+        command: true, help: HELP,
+        kwargs: {
+          from: { short: 'f' },
+          to: { short: 't' },
+        }
+      )
+
       def route_random(response)
         matches = response.matches[0]
 
