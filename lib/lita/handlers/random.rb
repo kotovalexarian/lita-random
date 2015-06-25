@@ -65,28 +65,13 @@ module Lita
         }
       )
 
-      def extract_argument(response, index, name)
-        matches = response.matches[0]
-        kwargs = response.extensions[:kwargs]
-
-        positional = matches[index]
-        kw = kwargs[name]
-
-        fail if positional && kw
-
-        raw = positional || kw
-
-        raw.send(raw =~ /\./ ? :to_f : :to_i) if raw
-      end
-
       def route_random(response)
-        begin
-          from = extract_argument(response, 0, :from) || 0
-          to = extract_argument(response, 1, :to) || 1.0
-        rescue RuntimeError
-          return
-        end
+        from = extract_argument(response, 0, :from, &method(:str_to_num)) || 0
+        to = extract_argument(response, 1, :to, &method(:str_to_num)) || 1.0
 
+      rescue RuntimeError # rubocop:disable Lint/HandleExceptions
+        # Invalid arguments
+      else
         response.reply(::Random.rand(from...to).to_s)
       end
 
@@ -199,6 +184,26 @@ module Lita
 
       def password(length = 16)
         (0...length).map { |_| PASS_CHARS.sample }.join
+      end
+
+    private
+
+      def extract_argument(response, index, name)
+        matches = response.matches[0]
+        kwargs = response.extensions[:kwargs]
+
+        positional = matches[index]
+        kw = kwargs[name]
+
+        fail if positional && kw
+
+        s = positional || kw
+
+        block_given? && s ? yield(s) : s
+      end
+
+      def str_to_num(s)
+        s =~ /\./ ? s.to_f : s.to_i
       end
     end
 
