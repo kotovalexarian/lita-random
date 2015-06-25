@@ -30,6 +30,10 @@ Lita.version_3_compatibility_mode = false
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.before do
+    registry.register_hook(:trigger_route, Lita::Extensions::KeywordArguments)
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
