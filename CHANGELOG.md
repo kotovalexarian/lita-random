@@ -1,5 +1,17 @@
 # Change Log
 
+## [v0.5.1](https://github.com/braiden-vasco/lita-random/tree/v0.5.1) (2015-06-25)
+
+[Full Changelog](https://github.com/braiden-vasco/lita-random/compare/v0.5.0...v0.5.1)
+
+**Merged pull requests:**
+
+- Test with multiple versions of Ruby [\#39](https://github.com/braiden-vasco/lita-random/pull/39) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Remove open-ended dependencies [\#38](https://github.com/braiden-vasco/lita-random/pull/38) ([braiden-vasco](https://github.com/braiden-vasco))
+
+- Remove unnecessary dependencies [\#37](https://github.com/braiden-vasco/lita-random/pull/37) ([braiden-vasco](https://github.com/braiden-vasco))
+
 ## [v0.5.0](https://github.com/braiden-vasco/lita-random/tree/v0.5.0) (2015-06-24)
 
 [Full Changelog](https://github.com/braiden-vasco/lita-random/compare/v0.4.0...v0.5.0)
