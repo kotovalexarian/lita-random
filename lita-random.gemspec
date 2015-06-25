@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', '~> 0.10'
 
   spec.add_runtime_dependency 'lita', '~> 4.4'
+  spec.add_runtime_dependency 'lita-keyword-arguments', '~> 1.0'
 end
