@@ -187,7 +187,7 @@ module Lita
         true => %w(a e i o u y),
       }
 
-      def smart_password(min_length = 8)
+      def smart_password(min_length)
         password = ''
         sequence_id = false
         while password.length < min_length
@@ -200,7 +200,7 @@ module Lita
 
       PASS_CHARS = [*'a'..'z', *'A'..'Z', *'0'..'9']
 
-      def password(length = 16)
+      def password(length)
         (0...length).map { |_| PASS_CHARS.sample }.join
       end
 
