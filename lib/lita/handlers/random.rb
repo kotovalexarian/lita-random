@@ -97,16 +97,21 @@ module Lita
         response.reply(SecureRandom.base64(length))
       end
 
-      route(/^rand(om)?\s*(he?)?x$/i, :route_random_hex, command: true)
-      def route_random_hex(response)
-        response.reply(SecureRandom.hex)
-      end
+      route(
+        /^rand(om)?\s*(he?)?x(\s+(?<n>\d+))?($|\s+)/i,
+        :route_random_hex,
+        command: true,
+        kwargs: {
+          size: { short: 's' },
+        }
+      )
 
-      route(/^rand(om)?\s*(he?)?x\s+(?<n>\d+)$/i,
-            :route_random_hex_n, command: true)
-      def route_random_hex_n(response)
-        n = response.matches[0][0].to_i
-        response.reply(SecureRandom.hex(n))
+      def route_random_hex(response)
+        size = extract_argument(response, 0, :size, &:to_i) || 16
+
+      rescue RuntimeError # rubocop:disable Lint/HandleExceptions
+      else
+        response.reply(SecureRandom.hex(size))
       end
 
       route(/^rand(om)?\s*u?uid$/i, :route_random_uuid, command: true)
