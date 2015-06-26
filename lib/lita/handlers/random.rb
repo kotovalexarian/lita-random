@@ -56,7 +56,7 @@ module Lita
       }
 
       route(
-        /^rand(om)?((\s+(?<from>\d+(\.\d+)?))?\s+(?<to>\d+(\.\d+)?))?($|\s+)/i,
+        /^rand(om)?((\s+(?<from>\d+(\.\d+)?))?\s+(?<to>\d+(\.\d+)?))?($|\s)/i,
         :route_random,
         command: true, help: HELP,
         kwargs: {
@@ -81,7 +81,7 @@ module Lita
       end
 
       route(
-        /^rand(om)?\s*b(ase)?64(\s+(?<n>\d+))?($|\s+)/i,
+        /^rand(om)?\s*b(ase)?64(\s+(?<n>\d+))?($|\s)/i,
         :route_random_base64,
         command: true,
         kwargs: {
@@ -98,7 +98,7 @@ module Lita
       end
 
       route(
-        /^rand(om)?\s*(he?)?x(\s+(?<n>\d+))?($|\s+)/i,
+        /^rand(om)?\s*(he?)?x(\s+(?<n>\d+))?($|\s)/i,
         :route_random_hex,
         command: true,
         kwargs: {
@@ -120,7 +120,7 @@ module Lita
       end
 
       route(
-        /^rand(om)?\s*smart\s*pass(word)?(\s+(?<n>\d+))?($|\s+)/i,
+        /^rand(om)?\s*smart\s*pass(word)?(\s+(?<n>\d+))?($|\s)/i,
         :route_random_smart_pass,
         command: true,
         kwargs: {
@@ -137,7 +137,7 @@ module Lita
       end
 
       route(
-        /^rand(om)?\s*pass(word)?(\s+(?<n>\d+))?($|\s+)/i,
+        /^rand(om)?\s*pass(word)?(\s+(?<n>\d+))?($|\s)/i,
         :route_random_pass,
         command: true,
         kwargs: {
