@@ -85,16 +85,16 @@ module Lita
         :route_random_base64,
         command: true,
         kwargs: {
-          length: { short: 'l' },
+          size: { short: 's' },
         }
       )
 
       def route_random_base64(response)
-        length = extract_argument(response, 0, :length, &:to_i) || 16
+        size = extract_argument(response, 0, :size, &:to_i) || 16
 
       rescue RuntimeError # rubocop:disable Lint/HandleExceptions
       else
-        response.reply(SecureRandom.base64(length))
+        response.reply(SecureRandom.base64(size))
       end
 
       route(
