@@ -119,17 +119,21 @@ module Lita
         response.reply(SecureRandom.uuid)
       end
 
-      route(/^rand(om)?\s*smart\s*pass(word)?$/i,
-            :route_random_smart_pass, command: true)
-      def route_random_smart_pass(response)
-        response.reply(smart_password)
-      end
+      route(
+        /^rand(om)?\s*smart\s*pass(word)?(\s+(?<n>\d+))?($|\s+)/i,
+        :route_random_smart_pass,
+        command: true,
+        kwargs: {
+          length: { short: 'l' },
+        }
+      )
 
-      route(/^rand(om)?\s*smart\s*pass(word)?\s+(?<n>\d+)$/i,
-            :route_random_smart_pass_n, command: true)
-      def route_random_smart_pass_n(response)
-        min_length = response.matches[0][0].to_i
-        response.reply(smart_password(min_length))
+      def route_random_smart_pass(response)
+        length = extract_argument(response, 0, :length, &:to_i) || 8
+
+      rescue RuntimeError # rubocop:disable Lint/HandleExceptions
+      else
+        response.reply(smart_password(length))
       end
 
       route(/^rand(om)?\s*pass(word)?$/i, :route_random_pass, command: true)
