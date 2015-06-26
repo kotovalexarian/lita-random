@@ -70,7 +70,6 @@ module Lita
         to = extract_argument(response, 1, :to, &method(:str_to_num)) || 1.0
 
       rescue RuntimeError # rubocop:disable Lint/HandleExceptions
-        # Invalid arguments
       else
         response.reply(::Random.rand(from...to).to_s)
       end
@@ -81,16 +80,21 @@ module Lita
         response.reply(random_case(response.matches[0][0] || ''))
       end
 
-      route(/^rand(om)?\s*b(ase)?64$/i, :route_random_base64, command: true)
-      def route_random_base64(response)
-        response.reply(SecureRandom.base64)
-      end
+      route(
+        /^rand(om)?\s*b(ase)?64(\s+(?<n>\d+))?/i,
+        :route_random_base64,
+        command: true,
+        kwargs: {
+          length: { short: 'l' },
+        }
+      )
 
-      route(/^rand(om)?\s*b(ase)?64\s+(?<n>\d+)$/i,
-            :route_random_base64_n, command: true)
-      def route_random_base64_n(response)
-        n = response.matches[0][0].to_i
-        response.reply(SecureRandom.base64(n))
+      def route_random_base64(response)
+        length = extract_argument(response, 0, :length, &:to_i) || 16
+
+      rescue RuntimeError # rubocop:disable Lint/HandleExceptions
+      else
+        response.reply(SecureRandom.base64(length))
       end
 
       route(/^rand(om)?\s*(he?)?x$/i, :route_random_hex, command: true)
