@@ -41,42 +41,82 @@ describe Lita::Handlers::Random, lita_handler: true do
 
   it do
     is_expected.to route_command('random smart password 0')
-      .to :route_random_smart_pass_n
+      .to :route_random_smart_pass
   end
 
   it do
     is_expected.to route_command('RaNdOmSmArT PaSs   0')
-      .to :route_random_smart_pass_n
+      .to :route_random_smart_pass
   end
 
   it do
     is_expected.to route_command('rAnDoM SmArTpAsSwOrD 16482')
-      .to :route_random_smart_pass_n
+      .to :route_random_smart_pass
   end
 
   it do
     is_expected.to route_command('randomsmartpass   1')
-      .to :route_random_smart_pass_n
+      .to :route_random_smart_pass
   end
 
   it do
     is_expected.to route_command('rANd SMarT paSS 148')
-      .to :route_random_smart_pass_n
+      .to :route_random_smart_pass
   end
 
   it do
     is_expected.to route_command('randsmart password   0')
-      .to :route_random_smart_pass_n
+      .to :route_random_smart_pass
   end
 
   it do
     is_expected.to route_command('rand smartpass 1')
-      .to :route_random_smart_pass_n
+      .to :route_random_smart_pass
   end
 
   it do
     is_expected.to route_command('RanDSmaRTpAsSwORd   137')
-      .to :route_random_smart_pass_n
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('random smart password -l 0')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('RaNdOmSmArT PaSs --length  0')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('rAnDoM SmArTpAsSwOrD -l 16482')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('randomsmartpass -l  1')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('rANd SMarT paSS --length 148')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('randsmart password  --length 0')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('rand smartpass -l 1')
+      .to :route_random_smart_pass
+  end
+
+  it do
+    is_expected.to route_command('RanDSmaRTpAsSwORd --length  137')
+      .to :route_random_smart_pass
   end
 
   describe '/random smart password' do
@@ -114,6 +154,16 @@ describe Lita::Handlers::Random, lita_handler: true do
 
     it 'replies in correct format' do
       send_command('random smartpass 16')
+      expect(replies.last).to match(/\A[a-z]{16,17}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('random smartpass -l 16')
+      expect(replies.last).to match(/\A[a-z]{16,17}\z/)
+    end
+
+    it 'replies in correct format' do
+      send_command('random smartpass --length 16')
       expect(replies.last).to match(/\A[a-z]{16,17}\z/)
     end
   end
