@@ -5,7 +5,7 @@ Lita::Handlers::Random
 [![Build Status](https://travis-ci.org/braiden-vasco/lita-random.svg)](https://travis-ci.org/braiden-vasco/lita-random)
 [![Coverage Status](https://coveralls.io/repos/braiden-vasco/lita-random/badge.svg)](https://coveralls.io/r/braiden-vasco/lita-random)
 
-Generator of random numbers and strings for the Lita chat bot.
+Generator of random numbers and strings for the [Lita](https://lita.io) chat bot.
 
 Usage
 -----
