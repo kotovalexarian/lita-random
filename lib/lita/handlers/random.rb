@@ -24,16 +24,16 @@ module Lita
           'random integer or float number, ' \
           'greater or equal to `from` and lesser than `to`',
 
-        'random case <s>' =>
-          'randomize case of each character of string `s`',
+        'random case <string>' =>
+          'randomize case of each character of string `string`',
 
-        'random base64 <n=16>' =>
-          'random base64 string, length of source string is n, ' \
-          'length of result is about `n * 4 / 3` ' \
-          '(24 with default value of `n`)',
+        'random base64 <size=16>' =>
+          'random base64 string, length of source string is `size`, ' \
+          'length of result is about `size * 4 / 3` ' \
+          '(24 with default value of `size`)',
 
-        'random hex <n=16>' =>
-          'random hexadecimal string with length `n * 2`',
+        'random hex <size=16>' =>
+          'random hexadecimal string with length `size * 2`',
 
         'random uuid' =>
           'v4 random UUID (Universally Unique IDentifier). ' \
@@ -41,18 +41,18 @@ module Lita
           'It doesn’t contain meaningful information ' \
           'such as MAC address, time, etc.',
 
-        'random password <n=16>' =>
-          'random password with length `n` containing characters ' \
+        'random password <length=16>' =>
+          'random password with length `length` containing characters ' \
           'in upper and lower case, and digits',
 
-        'random smart password <n=8>' =>
-          'random pronounceable password with a minimum length of `n`',
+        'random smart password <length=8>' =>
+          'random pronounceable password with a minimum length of `length`',
 
         'shuffle <array, ...>' =>
           'new array with elements of `array` shuffled',
 
-        'sample <n=1> <array, ...>' =>
-          'choose `n` random elements from `array`',
+        'sample <count=1> <array, ...>' =>
+          'choose `count` random elements from `array`',
       }
 
       route(
