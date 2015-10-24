@@ -1,3 +1,5 @@
+require 'lita-keyword-arguments'
+
 ##
 # Lita module.
 #
@@ -22,16 +24,16 @@ module Lita
           'random integer or float number, ' \
           'greater or equal to `from` and lesser than `to`',
 
-        'random case <s>' =>
-          'randomize case of each character of string `s`',
+        'random case <string>' =>
+          'randomize case of each character of string `string`',
 
-        'random base64 <n=16>' =>
-          'random base64 string, length of source string is n, ' \
-          'length of result is about `n * 4 / 3` ' \
-          '(24 with default value of `n`)',
+        'random base64 <size=16>' =>
+          'random base64 string, length of source string is `size`, ' \
+          'length of result is about `size * 4 / 3` ' \
+          '(24 with default value of `size`)',
 
-        'random hex <n=16>' =>
-          'random hexadecimal string with length `n * 2`',
+        'random hex <size=16>' =>
+          'random hexadecimal string with length `size * 2`',
 
         'random uuid' =>
           'v4 random UUID (Universally Unique IDentifier). ' \
@@ -39,55 +41,44 @@ module Lita
           'It doesn’t contain meaningful information ' \
           'such as MAC address, time, etc.',
 
-        'random password <n=16>' =>
-          'random password with length `n` containing characters ' \
+        'random password <length=16>' =>
+          'random password with length `length` containing characters ' \
           'in upper and lower case, and digits',
 
-        'random smart password <n=8>' =>
-          'random pronounceable password with a minimum length of `n`',
+        'random smart password <length=8>' =>
+          'random pronounceable password with a minimum length of `length`',
 
         'shuffle <array, ...>' =>
           'new array with elements of `array` shuffled',
 
-        'sample <n=1> <array, ...>' =>
-          'choose `n` random elements from `array`',
+        'sample <count=1> <array, ...>' =>
+          'choose `count` random elements from `array`',
       }
 
-      route(/^rand(om)?$/i, :route_random, command: true, help: HELP)
+      route(
+        /^rand(om)?((\s+(?<from>\d+(\.\d+)?))?\s+(?<to>\d+(\.\d+)?))?($|\s*-)/i,
+        :route_random,
+        command: true, help: HELP,
+        kwargs: {
+          from: { short: 'f' },
+          to: { short: 't' },
+        }
+      )
+
       def route_random(response)
-        response.reply(::Random.rand.to_s)
-      end
+        from = extract_argument(response, 0, :from, &method(:str_to_num)) || 0
+        to = extract_argument(response, 1, :to, &method(:str_to_num)) || 1.0
 
-      route(/^rand(om)?\s+(\d+)?$/i, :route_random_to, command: true)
-      def route_random_to(response)
-        to = response.matches[0][1].to_i
-        response.reply(::Random.rand(to).to_s)
-      end
+      rescue RuntimeError # rubocop:disable Lint/HandleExceptions
+      else
+        result = if from.is_a?(Float) || to.is_a?(Float)
+                   # In Rubinius,
+                   # ::Random.rand can not exclude non Integer end value
+                   ::Random.rand(from..(to - Float::EPSILON))
+                 else
+                   ::Random.rand(from...to)
+                 end
 
-      route(/^rand(om)?\s+(\d+\.\d+)?$/i, :route_random_float_to, command: true)
-      def route_random_float_to(response)
-        to = response.matches[0][1].to_f
-        response.reply(::Random.rand(to).to_s)
-      end
-
-      route(/^rand(om)?\s+(\d+)\s+(\d+)?$/i,
-            :route_random_from_to, command: true)
-      def route_random_from_to(response)
-        from = response.matches[0][1].to_i
-        to = response.matches[0][2].to_i
-        response.reply(::Random.rand(from...to).to_s)
-      end
-
-      route(/^rand(om)?\s+(?<from>\d+\.\d+)\s+(?<to>\d+)?$/i,
-            :route_random_float_from_to, command: true)
-      route(/^rand(om)?\s+(?<from>\d+(\.\d+)?)\s+(?<to>\d+\.\d+)?$/i,
-            :route_random_float_from_to, command: true)
-      def route_random_float_from_to(response)
-        matches = response.matches[0]
-        from = matches[0].to_f
-        to = matches[1].to_f
-        # In Rubinius, ::Random.rand can not exclude non Integer end value
-        result = ::Random.rand(from..(to - Float::EPSILON))
         response.reply(result.to_s)
       end
 
@@ -97,28 +88,38 @@ module Lita
         response.reply(random_case(response.matches[0][0] || ''))
       end
 
-      route(/^rand(om)?\s*b(ase)?64$/i, :route_random_base64, command: true)
+      route(
+        /^rand(om)?\s*b(ase)?64(\s+(?<n>\d+))?($|\s)/i,
+        :route_random_base64,
+        command: true,
+        kwargs: {
+          size: { short: 's' },
+        }
+      )
+
       def route_random_base64(response)
-        response.reply(SecureRandom.base64)
+        size = extract_argument(response, 0, :size, &:to_i) || 16
+
+      rescue RuntimeError # rubocop:disable Lint/HandleExceptions
+      else
+        response.reply(SecureRandom.base64(size))
       end
 
-      route(/^rand(om)?\s*b(ase)?64\s+(?<n>\d+)$/i,
-            :route_random_base64_n, command: true)
-      def route_random_base64_n(response)
-        n = response.matches[0][0].to_i
-        response.reply(SecureRandom.base64(n))
-      end
+      route(
+        /^rand(om)?\s*(he?)?x(\s+(?<n>\d+))?($|\s)/i,
+        :route_random_hex,
+        command: true,
+        kwargs: {
+          size: { short: 's' },
+        }
+      )
 
-      route(/^rand(om)?\s*(he?)?x$/i, :route_random_hex, command: true)
       def route_random_hex(response)
-        response.reply(SecureRandom.hex)
-      end
+        size = extract_argument(response, 0, :size, &:to_i) || 16
 
-      route(/^rand(om)?\s*(he?)?x\s+(?<n>\d+)$/i,
-            :route_random_hex_n, command: true)
-      def route_random_hex_n(response)
-        n = response.matches[0][0].to_i
-        response.reply(SecureRandom.hex(n))
+      rescue RuntimeError # rubocop:disable Lint/HandleExceptions
+      else
+        response.reply(SecureRandom.hex(size))
       end
 
       route(/^rand(om)?\s*u?uid$/i, :route_random_uuid, command: true)
@@ -126,28 +127,37 @@ module Lita
         response.reply(SecureRandom.uuid)
       end
 
-      route(/^rand(om)?\s*smart\s*pass(word)?$/i,
-            :route_random_smart_pass, command: true)
+      route(
+        /^rand(om)?\s*smart\s*pass(word)?(\s+(?<n>\d+))?($|\s)/i,
+        :route_random_smart_pass,
+        command: true,
+        kwargs: {
+          length: { short: 'l' },
+        }
+      )
+
       def route_random_smart_pass(response)
-        response.reply(smart_password)
+        length = extract_argument(response, 0, :length, &:to_i) || 8
+
+      rescue RuntimeError # rubocop:disable Lint/HandleExceptions
+      else
+        response.reply(smart_password(length))
       end
 
-      route(/^rand(om)?\s*smart\s*pass(word)?\s+(?<n>\d+)$/i,
-            :route_random_smart_pass_n, command: true)
-      def route_random_smart_pass_n(response)
-        min_length = response.matches[0][0].to_i
-        response.reply(smart_password(min_length))
-      end
+      route(
+        /^rand(om)?\s*pass(word)?(\s+(?<n>\d+))?($|\s)/i,
+        :route_random_pass,
+        command: true,
+        kwargs: {
+          length: { short: 'l' },
+        }
+      )
 
-      route(/^rand(om)?\s*pass(word)?$/i, :route_random_pass, command: true)
       def route_random_pass(response)
-        response.reply(password)
-      end
+        length = extract_argument(response, 0, :length, &:to_i) || 16
 
-      route(/^rand(om)?\s*pass(word)?\s+(?<n>\d+)$/i,
-            :route_random_pass_n, command: true)
-      def route_random_pass_n(response)
-        length = response.matches[0][0].to_i
+      rescue RuntimeError # rubocop:disable Lint/HandleExceptions
+      else
         response.reply(password(length))
       end
 
@@ -185,7 +195,7 @@ module Lita
         true => %w(a e i o u y),
       }
 
-      def smart_password(min_length = 8)
+      def smart_password(min_length)
         password = ''
         sequence_id = false
         while password.length < min_length
@@ -198,8 +208,26 @@ module Lita
 
       PASS_CHARS = [*'a'..'z', *'A'..'Z', *'0'..'9']
 
-      def password(length = 16)
+      def password(length)
         (0...length).map { |_| PASS_CHARS.sample }.join
+      end
+
+      def extract_argument(response, index, name)
+        matches = response.matches[0]
+        kwargs = response.extensions[:kwargs]
+
+        positional = matches[index]
+        kw = kwargs[name]
+
+        fail if positional && kw
+
+        s = positional || kw
+
+        block_given? && s ? yield(s) : s
+      end
+
+      def str_to_num(s)
+        s =~ /\./ ? s.to_f : s.to_i
       end
     end
 
