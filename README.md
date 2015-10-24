@@ -22,8 +22,26 @@ gem 'lita-random', '~> 0.5.1'
 
 ### Commands
 
-The space between instructions can be skiiped, so you can write
+The space between instructions can be skipped, so you can write
 `random hex` as `randomhex`, `rand b64` as `randb64`
+
+Arguments for all commands (excluding `random case`, `shuffle` and `sample`)
+can be passed as keyword arguments too. Put them after
+positional arguments with two dashes before, or the first letter
+of argument name with one dash. Examples:
+
+```
+You: lita random 5 10
+Lita: 7
+You: lita random 5 --to 5
+Lita: 9
+You: lita random 5 -t 10
+Lita: 5
+You: lita random --to 10 --from 5
+Lita: 6
+You: lita random -f 5 -t 10
+Lita: 9
+```
 
 Command `random` has alias `rand`
 
@@ -82,12 +100,12 @@ Lita: 0.8332672468501509
 
 You: lita random 5
 Lita: 2
-You: lita rand 100
+You: lita rand --to 100
 Lita: 24
 
-You: lita random 1.5
+You: lita random -f 1.5
 Lita: 1.1828046952104034
-You: lita random 5 10
+You: lita random 10 --from 5
 Lita: 8
 You: lita rand 1000 2000
 Lita: 1240
@@ -104,7 +122,7 @@ Lita: NMkIhB+iG2VNpg==
 
 You: lita random hex
 Lita: 7d6f39cf53303db862bac5e1b36eb0fa
-You: lita randx 10
+You: lita randx -s 10
 Lita: 0d8297837d6e63b8c25b
 
 You: lita random uuid
@@ -112,7 +130,7 @@ Lita: f1281565-3c8a-475d-a1aa-565ff840a42c
 
 You: lita random password
 Lita: TXXBu7XEBdwFF7fP
-You: lita randpass 8
+You: lita randpass --length 8
 Lita: 7lFateFs
 
 You: lita random smart password
