@@ -44,6 +44,11 @@ describe Lita::Handlers::Random, lita_handler: true do
   it { is_expected.to route_command('rANdOM -f 13.1 -t 0').to :route_random }
   it { is_expected.to route_command('ranD --from 1 --to 0.5').to :route_random }
 
+  it do
+    is_expected.not_to route_command('rand smart pass 10 --length 8')
+      .to :route_random
+  end
+
   describe '/random' do
     it 'replies in correct format' do
       send_command 'random'
