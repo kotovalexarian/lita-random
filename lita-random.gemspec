@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = 'lita-random'
-  spec.version       = '0.5.1'
+  spec.version       = '0.6.0'
   spec.authors       = ['Braiden Vasco']
   spec.email         = ['braiden-vasco@mailtor.net']
 
@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', '~> 0.10'
 
   spec.add_runtime_dependency 'lita', '~> 4.4'
+  spec.add_runtime_dependency 'lita-keyword-arguments', '~> 1.0'
 end
