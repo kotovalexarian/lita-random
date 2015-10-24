@@ -99,7 +99,7 @@ describe Lita::Handlers::Random, lita_handler: true do
     end
   end
 
-  describe '/random base64 <n>' do
+  describe '/random base64 <size>' do
     it 'replies in correct format' do
       send_command('random base64 0')
       expect(replies.last).to eq ''

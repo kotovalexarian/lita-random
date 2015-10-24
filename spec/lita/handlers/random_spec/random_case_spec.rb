@@ -9,7 +9,7 @@ describe Lita::Handlers::Random, lita_handler: true do
   it { is_expected.to route_command('rAnDoMcAsE').to :route_random_case }
   it { is_expected.to route_command('RaNdCaSe').to :route_random_case }
 
-  describe '/random case <s>' do
+  describe '/random case <string>' do
     it 'replies in correct format' do
       send_command 'random case'
       expect(replies.last).to eq ''

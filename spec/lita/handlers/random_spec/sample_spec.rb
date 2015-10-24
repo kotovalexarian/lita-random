@@ -59,7 +59,7 @@ describe Lita::Handlers::Random, lita_handler: true do
     end
   end
 
-  describe '/sample <n> <array, ...>' do
+  describe '/sample <count> <array, ...>' do
     it 'replies in correct format' do
       send_command 'sample  0  a'
       expect(replies.last).to eq ''

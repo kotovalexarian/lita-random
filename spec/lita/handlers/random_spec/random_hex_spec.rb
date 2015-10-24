@@ -64,7 +64,7 @@ describe Lita::Handlers::Random, lita_handler: true do
     end
   end
 
-  describe '/random hex <n>' do
+  describe '/random hex <size>' do
     it 'replies in correct format' do
       send_command('random hex 0')
       expect(replies.last).to eq ''

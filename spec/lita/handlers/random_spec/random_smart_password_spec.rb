@@ -126,7 +126,7 @@ describe Lita::Handlers::Random, lita_handler: true do
     end
   end
 
-  describe '/random smart password <n>' do
+  describe '/random smart password <length>' do
     it 'replies in correct format' do
       send_command('rAndoM sMarT pAssWorD 0')
       expect(replies.last).to eq ''
