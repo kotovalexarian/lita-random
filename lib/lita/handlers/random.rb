@@ -71,7 +71,14 @@ module Lita
 
       rescue RuntimeError # rubocop:disable Lint/HandleExceptions
       else
-        response.reply(::Random.rand(from...to).to_s)
+        result = if from.is_a?(Float) || to.is_a?(Float)
+          # In Rubinius, ::Random.rand can not exclude non Integer end value
+          ::Random.rand(from..(to - Float::EPSILON))
+        else
+          ::Random.rand(from...to)
+        end
+
+        response.reply(result.to_s)
       end
 
       route(/^rand(om)?\s*case(\s+(?<s>.*))?$/i,
