@@ -56,7 +56,7 @@ module Lita
       }
 
       route(
-        /^rand(om)?((\s+(?<from>\d+(\.\d+)?))?\s+(?<to>\d+(\.\d+)?))?($|\s)/i,
+        /^rand(om)?((\s+(?<from>\d+(\.\d+)?))?\s+(?<to>\d+(\.\d+)?))?($|\s*-)/i,
         :route_random,
         command: true, help: HELP,
         kwargs: {
