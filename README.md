@@ -17,7 +17,7 @@ At first, see the documentation for Lita: http://docs.lita.io/
 Add **lita-random** to your Lita instance's Gemfile:
 
 ```ruby
-gem 'lita-random', '~> 0.5.1'
+gem 'lita-random', '~> 0.6.0'
 ```
 
 ### Commands

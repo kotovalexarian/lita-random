@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = 'lita-random'
-  spec.version       = '0.5.1'
+  spec.version       = '0.6.0'
   spec.authors       = ['Braiden Vasco']
   spec.email         = ['braiden-vasco@mailtor.net']
 
