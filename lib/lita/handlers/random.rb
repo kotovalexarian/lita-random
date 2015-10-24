@@ -86,7 +86,9 @@ module Lita
         matches = response.matches[0]
         from = matches[0].to_f
         to = matches[1].to_f
-        response.reply(::Random.rand(from...to).to_s)
+        # In Rubinius, ::Random.rand can not exclude non Integer end value
+        result = ::Random.rand(from..(to - Float::EPSILON))
+        response.reply(result.to_s)
       end
 
       route(/^rand(om)?\s*case(\s+(?<s>.*))?$/i,
