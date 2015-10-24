@@ -212,8 +212,6 @@ module Lita
         (0...length).map { |_| PASS_CHARS.sample }.join
       end
 
-    private
-
       def extract_argument(response, index, name)
         matches = response.matches[0]
         kwargs = response.extensions[:kwargs]
