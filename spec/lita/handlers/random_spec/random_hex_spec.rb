@@ -148,5 +148,10 @@ describe Lita::Handlers::Random, lita_handler: true do
       send_command('randx --size 10')
       expect(replies.last).to match(/\A[0-9a-f]{20}\z/)
     end
+
+    it 'doesn\'t reply if both positional and keyword arguments present' do
+      send_command 'randx 10 --size 10'
+      expect(replies).to be_empty
+    end
   end
 end

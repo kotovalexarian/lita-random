@@ -38,7 +38,7 @@ describe Lita::Handlers::Random, lita_handler: true do
     end
   end
 
-  describe '/random password' do
+  describe '/random password <length>' do
     it 'replies in correct format' do
       send_command('RaNdOm pAsSwOrD 0')
       expect(replies.last).to eq ''
@@ -67,6 +67,11 @@ describe Lita::Handlers::Random, lita_handler: true do
     it 'replies in correct format' do
       send_command('rAnDpAsS --length 32')
       expect(replies.last).to match(/\A[\w\d]{32}\z/)
+    end
+
+    it 'doesn\'t reply if both positional and keyword arguments present' do
+      send_command 'randpass 10 -l 10'
+      expect(replies).to be_empty
     end
   end
 end

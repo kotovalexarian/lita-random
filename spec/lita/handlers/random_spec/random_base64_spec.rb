@@ -163,5 +163,10 @@ describe Lita::Handlers::Random, lita_handler: true do
       send_command('randb64  -s  35')
       expect(replies.last).to match %r{\A[A-Za-z0-9+/]{47}=\z}
     end
+
+    it 'doesn\'t reply if both positional and keyword arguments present' do
+      send_command 'randb64 2 -s 10'
+      expect(replies).to be_empty
+    end
   end
 end
